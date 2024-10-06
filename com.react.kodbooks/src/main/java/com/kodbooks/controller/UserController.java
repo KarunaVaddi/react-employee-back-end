@@ -1,4 +1,3 @@
-
 package com.kodbooks.controller;
 
 import java.io.IOException;
@@ -30,8 +29,7 @@ public class UserController {
 	UserService service;
 	@Autowired
 	PostService postService;
-	private HttpSession session;
-	private Model model;
+	
 	@PostMapping("/signUp")
 	public String addUser(@RequestBody User user) {
 		//user exists?
@@ -44,19 +42,17 @@ public class UserController {
 		return "sign up done";
 	}
 	
-
-	
 	@PostMapping("/login")
-	public String login(@RequestBody LoginData user, Model model, HttpSession session)	{
+	public String login(@RequestBody LoginData user)	{
 		
 		boolean status = service.validateUser(user.getUsername(), user.getPassword());
 		if(status == true) {
 			List<Post> allPosts = postService.fetchAllPosts();
 			
-			session.setAttribute("username", user.getUsername());
-			model.addAttribute("session", session);
+//			session.setAttribute("username", user.getUsername());
+//			model.addAttribute("session", session);
 			
-			model.addAttribute("allPosts", allPosts);
+			//model.addAttribute("allPosts", allPosts);
 			
 			return "valid";
 		}
